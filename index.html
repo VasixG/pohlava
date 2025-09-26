@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Котик + Молодец</title>
+  <style>
+    :root {
+      --bg-url: url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=2400&auto=format&fit=crop');
+      --glass: rgba(255,255,255,0.15);
+      --glass-border: rgba(255,255,255,0.35);
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+      background: #0a0a0f;
+      color: white;
+    }
+
+    .bg {
+      position: fixed; inset: 0;
+      background-image: var(--bg-url);
+      background-size: cover; background-position: center;
+      filter: brightness(0.6) saturate(1.2);
+      z-index: -1;
+    }
+    .bg::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(10,10,15,0.2), rgba(10,10,15,0.7));
+      pointer-events: none;
+    }
+
+    /* Текст "Молодец" */
+    .title {
+      position: fixed;
+      top: 20%; left: 50%; transform: translateX(-50%);
+      font-size: clamp(36px, 8vw, 72px);
+      font-weight: bold;
+      color: #ffecf0;
+      text-shadow: 0 0 10px #ff7aa2, 0 0 20px #ff7aa2, 0 0 40px #ff7aa2;
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%,100% { text-shadow: 0 0 10px #ff7aa2, 0 0 20px #ff7aa2, 0 0 40px #ff7aa2; }
+      50% { text-shadow: 0 0 20px #78c5ff, 0 0 40px #78c5ff, 0 0 60px #78c5ff; }
+    }
+
+    /* --- Котик --- */
+    .kitty-wrap {
+      position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+      width: clamp(220px, 28vw, 360px); aspect-ratio: 1.4/1; 
+      pointer-events: none;
+    }
+    .kitty { width: 100%; height: 100%; overflow: visible; }
+
+    @keyframes floaty { 0%,100%{ transform: translateY(0px);} 50%{ transform: translateY(-6px);} }
+    .group { animation: floaty 5s ease-in-out infinite; }
+
+    @keyframes wag { 0%,100%{ transform: rotate(12deg);} 50%{ transform: rotate(-8deg);} }
+    .tail { transform-origin: 210px 170px; animation: wag 1.8s ease-in-out infinite; }
+
+    @keyframes twitch { 0%,92%,100%{ transform: rotate(0deg);} 96%{ transform: rotate(-6deg);} }
+    .ear { transform-origin: 120px 70px; animation: twitch 6s ease-in-out infinite; }
+
+    @keyframes blink { 0%,92%,100%{ transform: scaleY(0);} 96%{ transform: scaleY(1);} }
+    .lids { transform-origin: 0 0; animation: blink 4.6s ease-in-out infinite; }
+
+    @keyframes pulse { 0%,100%{ transform: scale(1);} 50%{ transform: scale(1.18);} }
+    .heart { transform-origin: center; animation: pulse 1.8s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <div class="title">✨ Умница ✨</div>
+
+  <!-- Котик -->
+  <div class="kitty-wrap">
+    <svg class="kitty" viewBox="0 0 260 200" role="img" aria-label="Cute animated kitty">
+      <defs>
+        <filter id="glow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <radialGradient id="fur" cx="40%" cy="35%">
+          <stop offset="0%" stop-color="#ffeede"/>
+          <stop offset="70%" stop-color="#f7c8a8"/>
+          <stop offset="100%" stop-color="#e7a585"/>
+        </radialGradient>
+        <linearGradient id="belly" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#fff6f0"/>
+          <stop offset="100%" stop-color="#ffe3d1"/>
+        </linearGradient>
+        <linearGradient id="tailGrad" x1="0" x2="1">
+          <stop offset="0%" stop-color="#f7c8a8"/>
+          <stop offset="100%" stop-color="#e7a585"/>
+        </linearGradient>
+      </defs>
+
+      <g class="group">
+        <!-- Tail -->
+        <g class="tail">
+          <path d="M205 165 q30 -10 25 -40 q-6 -34 -42 -20 q20 -2 22 12 q3 16 -18 18 q-10 1 -12 10 q-2 9 10 16 q6 4 15 4z" fill="url(#tailGrad)"/>
+        </g>
+
+        <!-- Body -->
+        <ellipse cx="140" cy="150" rx="68" ry="48" fill="url(#fur)" />
+        <ellipse cx="135" cy="160" rx="40" ry="28" fill="url(#belly)" />
+
+        <!-- Paws -->
+        <ellipse cx="95" cy="185" rx="16" ry="10" fill="#ffe6d6" />
+        <ellipse cx="145" cy="188" rx="18" ry="10" fill="#ffe6d6" />
+
+        <!-- Head -->
+        <g>
+          <ellipse cx="120" cy="100" rx="52" ry="44" fill="url(#fur)"/>
+          <!-- Ears -->
+          <g class="ear">
+            <path d="M82 80 l-18 -22 l28 6 z" fill="#f8c7a7"/>
+            <path d="M158 70 l18 -22 l-6 28 z" fill="#f8c7a7"/>
+          </g>
+          <!-- Eyes -->
+          <g>
+            <circle cx="100" cy="100" r="8" fill="#1e2330"/>
+            <circle cx="140" cy="98" r="8" fill="#1e2330"/>
+            <circle cx="97" cy="97" r="2" fill="#9be7ff"/>
+            <circle cx="137" cy="95" r="2" fill="#9be7ff"/>
+            <!-- lids -->
+            <g class="lids" transform="translate(0,0) scale(1,0)">
+              <rect x="90" y="92" width="20" height="16" fill="#f7c8a8"/>
+              <rect x="130" y="90" width="20" height="16" fill="#f7c8a8"/>
+            </g>
+          </g>
+          <!-- Nose & mouth -->
+          <path d="M118 112 q2 4 4 0" stroke="#cc6a6a" stroke-width="2" fill="none"/>
+          <ellipse cx="120" cy="110" rx="3" ry="2" fill="#cc6a6a"/>
+          <path d="M120 112 q-10 10 -20 0" stroke="#7d5142" stroke-width="2" fill="none"/>
+          <path d="M120 112 q10 10 20 0" stroke="#7d5142" stroke-width="2" fill="none"/>
+          <!-- Whiskers -->
+          <path d="M78 110 h22" stroke="#7d5142" stroke-width="2"/>
+          <path d="M78 116 h22" stroke="#7d5142" stroke-width="2"/>
+          <path d="M142 110 h22" stroke="#7d5142" stroke-width="2"/>
+          <path d="M142 116 h22" stroke="#7d5142" stroke-width="2"/>
+        </g>
+
+        <!-- Little heart charm -->
+        <g transform="translate(170,128)">
+          <path class="heart" d="M10 6 C10 2, 6 0, 4 2 C2 0, -2 2, -2 6 C-2 9, 1 11, 4 14 C7 11, 10 9, 10 6 Z" fill="#ff7aa2" filter="url(#glow)"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>
