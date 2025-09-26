@@ -6,7 +6,7 @@
   <title>Котик + Молодец</title>
   <style>
     :root {
-      --bg-url: url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=2400&auto=format&fit=crop');
+      --bg-url: url('images/we.png');
       --glass: rgba(255,255,255,0.15);
       --glass-border: rgba(255,255,255,0.35);
     }
@@ -17,8 +17,9 @@
       margin: 0;
       font-family: 'Comic Sans MS', cursive, sans-serif;
       overflow: hidden;
-      background: #0a0a0f;
+      background-image: url('images/we.png');
       color: white;
+      background-size: cover;
     }
 
     .bg {
@@ -68,9 +69,7 @@
     @keyframes twitch { 0%,92%,100%{ transform: rotate(0deg);} 96%{ transform: rotate(-6deg);} }
     .ear { transform-origin: 120px 70px; animation: twitch 6s ease-in-out infinite; }
 
-    @keyframes blink { 0%,92%,100%{ transform: scaleY(0);} 96%{ transform: scaleY(1);} }
-    .lids { transform-origin: 0 0; animation: blink 4.6s ease-in-out infinite; }
-
+    
     @keyframes pulse { 0%,100%{ transform: scale(1);} 50%{ transform: scale(1.18);} }
     .heart { transform-origin: center; animation: pulse 1.8s ease-in-out infinite; }
   </style>
